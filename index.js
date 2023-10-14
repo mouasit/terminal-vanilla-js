@@ -1,7 +1,12 @@
 const modal = document.getElementById("modal");
-const dropDownCPU = document.getElementById("dropDownCPU");
-const dropDownList = document.getElementById("dropDownList");
+const dropdownCPU = document.getElementById("dropdownCPU");
+const dropdownList = document.getElementById("dropdownList");
 const saveButton = document.getElementById("save");
+
+const listContainer = document.getElementById("listContainer");
+const cpuContainer = document.getElementById("cpuContainer");
+
+// --- handel modal ---
 
 function openModal() {
   modal.classList.remove("hidden");
@@ -9,114 +14,83 @@ function openModal() {
 
 function closeModal() {
   modal.classList.add("hidden");
-  const buttonDropdownCPU = dropDownCPU.parentElement.querySelector("button");
-  const valueDropDownCPU = buttonDropdownCPU.querySelector("span");
-  const buttonDropdownList = dropDownList.parentElement.querySelector("button");
-  const valueDropDownList = buttonDropdownList.querySelector("span");
+  const buttonDropdownCPU = dropdownCPU.parentElement.querySelector("button");
+  const valueDropdownCPU = buttonDropdownCPU.querySelector("span");
+  const buttonDropdownList = dropdownList.parentElement.querySelector("button");
+  const valueDropdownList = buttonDropdownList.querySelector("span");
 
-  valueDropDownCPU.innerHTML = "Chose CPU";
-  valueDropDownList.innerHTML = "List";
+  valueDropdownCPU.innerHTML = "Chose CPU";
+  valueDropdownList.innerHTML = "List";
+}
 
-  if (!dropDownCPU.classList.contains("hidden"))
-    dropDownCPU.classList.add("hidden");
-  if (!dropDownList.classList.contains("hidden"))
-    dropDownList.classList.add("hidden");
-  saveButton.classList.add("hidden");
+// --- handel dropdown ---
 
+document.addEventListener("click", (e) => {
   if (
-    dropDownCPU.parentElement
-      .querySelector("i")
-      .classList.contains("bx-chevron-up")
+    !dropdownCPU.classList.contains("hidden") &&
+    !cpuContainer.contains(e.target)
   ) {
-    dropDownCPU.parentElement
-      .querySelector("i")
-      .classList.remove("bx-chevron-up");
-    dropDownCPU.parentElement
-      .querySelector("i")
-      .classList.add("bx-chevron-down");
+    closeDropdown(
+      dropdownCPU,
+      dropdownCPU.parentElement.querySelector("button")
+    );
   }
 
   if (
-    dropDownList.parentElement
-      .querySelector("i")
-      .classList.contains("bx-chevron-up")
-  )
-    dropDownList.parentElement
-      .querySelector("i")
-      .classList.remove("bx-chevron-up");
-  dropDownList.parentElement
-    .querySelector("i")
-    .classList.add("bx-chevron-down");
+    !dropdownList.classList.contains("hidden") &&
+    !listContainer.contains(e.target)
+  ) {
+    closeDropdown(
+      dropdownList,
+      dropdownList.parentElement.querySelector("button")
+    );
+  }
+});
+
+function closeDropdown(dropdown, button) {
+  if (!dropdown.classList.contains("hidden")) {
+    dropdown.classList.add("hidden");
+    button.querySelector("i").classList.remove("bx-chevron-up");
+    button.querySelector("i").classList.add("bx-chevron-down");
+  }
 }
 
-function toggleDropDownCPU(element) {
-  dropDownCPU.classList.toggle("hidden");
+function toggleDropdownCPU(element) {
+  dropdownCPU.classList.toggle("hidden");
   element.querySelector("i").classList.toggle("bx-chevron-down");
   element.querySelector("i").classList.toggle("bx-chevron-up");
 }
 
-function toggleDropDownList(element) {
-  dropDownList.classList.toggle("hidden");
+function toggleDropdownList(element) {
+  dropdownList.classList.toggle("hidden");
   element.querySelector("i").classList.toggle("bx-chevron-down");
   element.querySelector("i").classList.toggle("bx-chevron-up");
 }
+
+function clickDropdown(dropdown, element, toggleDisplay) {
+  const buttonDropdown = dropdown.parentElement.querySelector("button");
+  const valueDropdown = buttonDropdown.querySelector("span");
+  valueDropdown.innerHTML = element.innerHTML;
+  toggleDisplay(buttonDropdown);
+
+  if (saveButton.classList.contains("hidden"))
+    saveButton.classList.remove("hidden");
+}
+
+dropdownCPU.querySelectorAll("button").forEach((element) => {
+  element.addEventListener("click", () => {
+    clickDropdown(dropdownCPU, element, toggleDropdownCPU);
+  });
+});
+
+dropdownList.querySelectorAll("button").forEach((element) => {
+  element.addEventListener("click", () => {
+    clickDropdown(dropdownList, element, toggleDropdownList);
+  });
+});
+
+// --- handel save button ---
 
 function save() {
   closeModal();
 }
-
-dropDownCPU.querySelectorAll("button").forEach((element) => {
-  element.addEventListener("click", () => {
-    const buttonDropdown = dropDownCPU.parentElement.querySelector("button");
-    const valueDropDown = buttonDropdown.querySelector("span");
-    valueDropDown.innerHTML = element.innerHTML;
-    toggleDropDownCPU(buttonDropdown);
-
-    if (!dropDownList.classList.contains("hidden"))
-      dropDownList.classList.add("hidden");
-
-    if (
-      dropDownList.parentElement
-        .querySelector("i")
-        .classList.contains("bx-chevron-up")
-    ) {
-      dropDownList.parentElement
-        .querySelector("i")
-        .classList.remove("bx-chevron-up");
-      dropDownList.parentElement
-        .querySelector("i")
-        .classList.add("bx-chevron-down");
-    }
-
-    if (saveButton.classList.contains("hidden"))
-      saveButton.classList.remove("hidden");
-  });
-});
-
-dropDownList.querySelectorAll("button").forEach((element) => {
-  element.addEventListener("click", () => {
-    const buttonDropdown = dropDownList.parentElement.querySelector("button");
-    const valueDropDown = buttonDropdown.querySelector("span");
-    valueDropDown.innerHTML = element.innerHTML;
-    toggleDropDownList(buttonDropdown);
-
-    if (!dropDownCPU.classList.contains("hidden"))
-      dropDownCPU.classList.add("hidden");
-
-    if (
-      dropDownCPU.parentElement
-        .querySelector("i")
-        .classList.contains("bx-chevron-up")
-    ) {
-      dropDownCPU.parentElement
-        .querySelector("i")
-        .classList.remove("bx-chevron-up");
-      dropDownCPU.parentElement
-        .querySelector("i")
-        .classList.add("bx-chevron-down");
-    }
-
-    if (saveButton.classList.contains("hidden"))
-      saveButton.classList.remove("hidden");
-  });
-});
