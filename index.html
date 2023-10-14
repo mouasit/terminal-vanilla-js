@@ -80,13 +80,19 @@
         <!-- Modal body -->
         <div class="flex h-full justify-center items-center" id="modalBody">
           <div class="flex flex-col gap-4 items-center w-full">
-            <button
-              id="frontButton"
-              class="flex w-48 bg-black text-white items-center justify-center gap-2 shadow-sm border p-3 rounded-lg"
-              onclick="handelFront()"
-            >
-              Front
-            </button>
+            <div id="frontContainer">
+              <button
+                class="flex w-48 bg-black text-white items-center justify-center items-center gap-2 shadow-sm border p-3 rounded-lg"
+                onclick="handelFront(this)"
+              >
+                Front
+              </button>
+              <span
+                class="hidden flex items-center justify-center gap-4 rounded-md bg-green-50 p-3 font-medium text-green-700 ring-1 ring-inset ring-green-600/20 w-48"
+              >
+                Front <i class="bx bx-check-circle mt-[2px]"></i>
+              </span>
+            </div>
             <span id="separator">- or -</span>
             <div
               class="flex items-center justify-around w-full"
@@ -143,10 +149,13 @@
               </div>
             </div>
 
-            <div class="mt-[3rem] w-full flex justify-end hidden gap-3" id="save">
+            <div
+              class="mt-[3rem] w-full flex justify-end hidden gap-3"
+              id="save"
+            >
               <button
                 class="flex w-32 bg-white text-black border-[1px] border-black items-center justify-center gap-2 shadow-sm border p-3 rounded-lg"
-                onclick="back()"
+                onclick="initialState()"
               >
                 Back
               </button>

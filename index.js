@@ -2,7 +2,7 @@ const modal = document.getElementById("modal");
 const dropdownCPU = document.getElementById("dropdownCPU");
 const dropdownList = document.getElementById("dropdownList");
 const saveButton = document.getElementById("save");
-const frontButton = document.getElementById("frontButton");
+const frontContainer = document.getElementById("frontContainer");
 const separator = document.getElementById("separator");
 const selectContainer = document.getElementById("selectContainer");
 const modalBody = document.getElementById("modalBody");
@@ -84,16 +84,21 @@ function clickDropdownButtonElement(dropdown, element, toggleDisplay) {
   valueDropdown.innerHTML = element.innerHTML;
   toggleDisplay(buttonDropdown);
 
-  if (!frontButton.classList.contains("hidden")) {
-    frontButton.classList.add("hidden");
-  }
-
   addUiToModal();
+  if (!frontContainer.classList.contains("hidden")) {
+    frontContainer.classList.add("hidden");
+  }
 
   if (saveButton.classList.contains("hidden")) {
     saveButton.classList.remove("hidden");
   }
 }
+
+dropdownList.querySelectorAll("button").forEach((element) => {
+  element.addEventListener("click", () => {
+    clickDropdownButtonElement(dropdownList, element, toggleDropdownList);
+  });
+});
 
 function addUiToModal() {
   if (modal.querySelector("div").classList.contains("h-[21.5rem]")) {
@@ -117,19 +122,16 @@ dropdownCPU.querySelectorAll("button").forEach((element) => {
   });
 });
 
-dropdownList.querySelectorAll("button").forEach((element) => {
-  element.addEventListener("click", () => {
-    clickDropdownButtonElement(dropdownList, element, toggleDropdownList);
-  });
-});
-
 // --- handel front button ---
 
-function handelFront() {
+function handelFront(element) {
+  addUiToModal();
+  element.classList.add("hidden");
+  element.parentElement.querySelector("span").classList.remove("hidden");
+
   if (!selectContainer.classList.contains("hidden")) {
     selectContainer.classList.add("hidden");
   }
-  addUiToModal();
 
   if (saveButton.classList.contains("hidden")) {
     saveButton.classList.remove("hidden");
@@ -140,4 +142,23 @@ function handelFront() {
 
 function save() {
   closeModal();
+}
+
+// --- handel initialState ---
+
+function initialState() {
+  const buttonDropdownCPU = dropdownCPU.parentElement.querySelector("button");
+  const valueDropdownCPU = buttonDropdownCPU.querySelector("span");
+  const buttonDropdownList = dropdownList.parentElement.querySelector("button");
+  const valueDropdownList = buttonDropdownList.querySelector("span");
+
+  deleteUiFromModal();
+  frontContainer.classList.remove("hidden");
+  frontContainer.querySelector("button").classList.remove("hidden");
+  frontContainer.querySelector("span").classList.add("hidden");
+  selectContainer.classList.remove("hidden");
+  saveButton.classList.add("hidden");
+
+  valueDropdownCPU.innerHTML = initialValueOfDropdownCPU;
+  valueDropdownList.innerHTML = initialValueOfDropdownList;
 }
