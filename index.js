@@ -2,6 +2,13 @@ const modal = document.getElementById("modal");
 const dropdownCPU = document.getElementById("dropdownCPU");
 const dropdownList = document.getElementById("dropdownList");
 const saveButton = document.getElementById("save");
+const initialValueOfDropdownCPU = dropdownCPU.parentElement
+  .querySelector("button")
+  .querySelector("span").innerHTML;
+
+const initialValueOfDropdownList = dropdownList.parentElement
+  .querySelector("button")
+  .querySelector("span").innerHTML;
 
 const listContainer = document.getElementById("listContainer");
 const cpuContainer = document.getElementById("cpuContainer");
@@ -19,8 +26,8 @@ function closeModal() {
   const buttonDropdownList = dropdownList.parentElement.querySelector("button");
   const valueDropdownList = buttonDropdownList.querySelector("span");
 
-  valueDropdownCPU.innerHTML = "Chose CPU";
-  valueDropdownList.innerHTML = "List";
+  valueDropdownCPU.innerHTML = initialValueOfDropdownCPU;
+  valueDropdownList.innerHTML = initialValueOfDropdownList;
 }
 
 // --- handel dropdown ---
