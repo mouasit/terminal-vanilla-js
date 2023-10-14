@@ -2,6 +2,10 @@ const modal = document.getElementById("modal");
 const dropdownCPU = document.getElementById("dropdownCPU");
 const dropdownList = document.getElementById("dropdownList");
 const saveButton = document.getElementById("save");
+const frontButton = document.getElementById("frontButton");
+const separator = document.getElementById("separator");
+const selectContainer = document.getElementById("selectContainer");
+const modalBody = document.getElementById("modalBody");
 const initialValueOfDropdownCPU = dropdownCPU.parentElement
   .querySelector("button")
   .querySelector("span").innerHTML;
@@ -74,27 +78,63 @@ function toggleDropdownList(element) {
   element.querySelector("i").classList.toggle("bx-chevron-up");
 }
 
-function clickDropdown(dropdown, element, toggleDisplay) {
+function clickDropdownButtonElement(dropdown, element, toggleDisplay) {
   const buttonDropdown = dropdown.parentElement.querySelector("button");
   const valueDropdown = buttonDropdown.querySelector("span");
   valueDropdown.innerHTML = element.innerHTML;
   toggleDisplay(buttonDropdown);
 
-  if (saveButton.classList.contains("hidden"))
+  if (!frontButton.classList.contains("hidden")) {
+    frontButton.classList.add("hidden");
+  }
+
+  addUiToModal();
+
+  if (saveButton.classList.contains("hidden")) {
     saveButton.classList.remove("hidden");
+  }
+}
+
+function addUiToModal() {
+  if (modal.querySelector("div").classList.contains("h-[21.5rem]")) {
+    modal.querySelector("div").classList.remove("h-[21.5rem]");
+    modal.querySelector("div").classList.add("h-[18rem]");
+    modalBody.classList.add("mt-[3rem]");
+    separator.classList.add("hidden");
+  }
+}
+
+function deleteUiFromModal() {
+  modal.querySelector("div").classList.remove("h-[18rem]");
+  modal.querySelector("div").classList.add("h-[21.5rem]");
+  modalBody.classList.remove("mt-[3rem]");
+  separator.classList.remove("hidden");
 }
 
 dropdownCPU.querySelectorAll("button").forEach((element) => {
   element.addEventListener("click", () => {
-    clickDropdown(dropdownCPU, element, toggleDropdownCPU);
+    clickDropdownButtonElement(dropdownCPU, element, toggleDropdownCPU);
   });
 });
 
 dropdownList.querySelectorAll("button").forEach((element) => {
   element.addEventListener("click", () => {
-    clickDropdown(dropdownList, element, toggleDropdownList);
+    clickDropdownButtonElement(dropdownList, element, toggleDropdownList);
   });
 });
+
+// --- handel front button ---
+
+function handelFront() {
+  if (!selectContainer.classList.contains("hidden")) {
+    selectContainer.classList.add("hidden");
+  }
+  addUiToModal();
+
+  if (saveButton.classList.contains("hidden")) {
+    saveButton.classList.remove("hidden");
+  }
+}
 
 // --- handel save button ---
 
