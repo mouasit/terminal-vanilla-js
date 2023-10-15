@@ -136,6 +136,10 @@ function successFrontButtonView() {
     </span>`;
 }
 
+function save() {
+  closeModal();
+}
+
 function modalView() {
   return `<div id='modal' class='fixed left-0 top-0 flex justify-center bg-black/30 w-full h-full backdrop-blur-sm z-[999]'>
   <div
