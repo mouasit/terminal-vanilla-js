@@ -1,5 +1,3 @@
-const modal = document.getElementById("modal");
-
 function addResource() {
   document.body.querySelector("main").innerHTML += modalView();
 }
@@ -56,6 +54,7 @@ function closeDropdown(dropdownView, dropdownButton) {
 }
 
 function clickDropdownCpuButtonElement(element) {
+  const frontButton = document.getElementById("frontButton");
   const valueOfButtonDropdown = document
     .getElementById("cpuContainer")
     .querySelector("button")
@@ -66,9 +65,12 @@ function clickDropdownCpuButtonElement(element) {
     document.getElementById("cpuView"),
     document.getElementById("cpuContainer").querySelector("button")
   );
+  frontButton?.remove();
+  displaySave();
 }
 
 function clickDropdownListButtonElement(element) {
+  const frontButton = document.getElementById("frontButton");
   const valueOfButtonDropdown = document
     .getElementById("listContainer")
     .querySelector("button")
@@ -79,89 +81,98 @@ function clickDropdownListButtonElement(element) {
     document.getElementById("listView"),
     document.getElementById("listContainer").querySelector("button")
   );
+  frontButton?.remove();
+  displaySave();
+}
+
+function displaySave() {
+  const separator = document.getElementById("separator");
+  const modalBody = document.getElementById("modalBody");
+  const saveButton = document.getElementById("save");
+
+  separator?.remove();
+  addUiToModal();
+  if (!saveButton) modalBody.innerHTML += saveView();
+}
+
+function handelFrontButton() {
+  const selectContainer = document.getElementById("selectContainer");
+  selectContainer?.remove();
+  displaySave();
+}
+
+function addUiToModal() {
+  const modal = document.getElementById("modal").querySelector("div");
+  const modalBody = document.getElementById("modalBody");
+  if (modal.classList.contains("h-[21.5rem]")) {
+    modal.classList.remove("h-[21.5rem]");
+    modal.classList.add("h-[18rem]");
+    modalBody.classList.add("mt-[3rem]");
+  }
 }
 
 function modalView() {
   return `<div id='modal' class='fixed left-0 top-0 flex justify-center bg-black/30 w-full h-full backdrop-blur-sm z-[999]'>
+  <div
+    class='mt-8 rounded-lg flex flex-col p-4 bg-white w-[40rem] h-[21.5rem]'
+  >
+    <!-- Modal header -->
     <div
-      class='mt-8 rounded-lg flex flex-col p-4 bg-white w-[40rem] h-[21.5rem]'
+      class='flex items-center w-full justify-between border-secondaryText'
     >
-      <!-- Modal header -->
-      <div
-        class='flex items-center w-full justify-between border-secondaryText'
-      >
-        <h1 class='text-primaryText text-xl font-bold'>Add Resource</h1>
-        <button class='w-4 h-4 rounded-full' onclick='closeModal()'>
-          <svg x='0' y='0' viewBox='0 0 512 512'>
-            <g>
-              <g data-name='02 User'>
-                <path
-                  d='M25 512a25 25 0 0 1-17.68-42.68l462-462a25 25 0 0 1 35.36 35.36l-462 462A24.93 24.93 0 0 1 25 512z'
-                  opacity='1'
-                  data-original='#000000'
-                ></path>
-                <path
-                  d='M487 512a24.93 24.93 0 0 1-17.68-7.32l-462-462A25 25 0 0 1 42.68 7.32l462 462A25 25 0 0 1 487 512z'
-                  opacity='1'
-                  data-original='#000000'
-                ></path>
-              </g>
+      <h1 class='text-primaryText text-xl font-bold'>Add Resource</h1>
+      <button class='w-4 h-4 rounded-full' onclick='closeModal()'>
+        <svg x='0' y='0' viewBox='0 0 512 512'>
+          <g>
+            <g data-name='02 User'>
+              <path
+                d='M25 512a25 25 0 0 1-17.68-42.68l462-462a25 25 0 0 1 35.36 35.36l-462 462A24.93 24.93 0 0 1 25 512z'
+                opacity='1'
+                data-original='#000000'
+              ></path>
+              <path
+                d='M487 512a24.93 24.93 0 0 1-17.68-7.32l-462-462A25 25 0 0 1 42.68 7.32l462 462A25 25 0 0 1 487 512z'
+                opacity='1'
+                data-original='#000000'
+              ></path>
             </g>
-          </svg>
-        </button>
-      </div>
-      <!-- Modal body -->
-      <div class='flex h-full justify-center items-center'>
-        <div class='flex flex-col gap-4 items-center w-full'>
-          <div>
+          </g>
+        </svg>
+      </button>
+    </div>
+    <!-- Modal body -->
+    <div class='flex h-full justify-center items-center'>
+      <div class='flex flex-col gap-4 items-center w-full' id="modalBody">
+          <button
+            id="frontButton"
+            class='flex w-48 bg-black text-white items-center justify-center items-center gap-2 shadow-sm border p-3 rounded-lg' onclick="handelFrontButton()"
+          >
+            Front
+          </button>
+        <span id="separator">- or -</span>
+        <div class='flex items-center justify-around w-full' id="selectContainer">
+          <div class='relative' id="cpuContainer">
             <button
-              class='flex w-48 bg-black text-white items-center justify-center items-center gap-2 shadow-sm border p-3 rounded-lg'
+              class='item-dropdown-cpu shadow-sm border flex items-center justify-between font-medium w-48 p-3 rounded-lg' onclick="openDropdownCpu(this)"
             >
-              Front
+              <span class='item-dropdown-cpu'>Chose CPU</span>
+              <i class='bx bx-chevron-down item-dropdown-cpu'></i>
             </button>
-            <span
-              class='hidden flex items-center justify-center gap-4 rounded-md bg-green-50 p-3 font-medium text-green-700 ring-1 ring-inset ring-green-600/20 w-48'
-            >
-              Front <i class='bx bx-check-circle mt-[2px]'></i>
-            </span>
-          </div>
-          <span>- or -</span>
-          <div class='flex items-center justify-around w-full'>
-            <div class='relative' id="cpuContainer">
-              <button
-                class='item-dropdown-cpu shadow-sm border flex items-center justify-between font-medium w-48 p-3 rounded-lg' onclick="openDropdownCpu(this)"
-              >
-                <span class='item-dropdown-cpu'>Chose CPU</span>
-                <i class='bx bx-chevron-down item-dropdown-cpu'></i>
-              </button>
-            </div>
-
-            <div class='relative' id="listContainer">
-              <button
-                class='shadow-sm border flex items-center justify-between font-medium w-48 p-3 rounded-lg item-dropdown-list' onclick="openDropdownList(this)"
-              >
-                <span class='item-dropdown-list'>List</span>
-                <i class='bx bx-chevron-down item-dropdown-list'></i>
-              </button>
-            </div>
           </div>
 
-          <div class='mt-[3rem] w-full flex justify-end hidden gap-3'>
+          <div class='relative' id="listContainer">
             <button
-              class='flex w-32 bg-white text-black border-[1px] border-black items-center justify-center gap-2 shadow-sm border p-3 rounded-lg'
+              class='shadow-sm border flex items-center justify-between font-medium w-48 p-3 rounded-lg item-dropdown-list' onclick="openDropdownList(this)"
             >
-              Back
-            </button>
-            <button
-              class='flex w-32 bg-black text-white items-center justify-center gap-2 shadow-sm border p-3 rounded-lg'
-            >
-              Save
+              <span class='item-dropdown-list'>List</span>
+              <i class='bx bx-chevron-down item-dropdown-list'></i>
             </button>
           </div>
         </div>
       </div>
     </div>
-  </div>`;
+  </div>
+</div>`;
 }
 
 function dropdownCpuView() {
@@ -198,4 +209,20 @@ function dropdownListView() {
         List <span class='font-bold'>03</span>
       </button>
     </div>`;
+}
+
+function saveView() {
+  return `<div class='mt-[3rem] w-full flex justify-end gap-3'>
+    <button
+      class='flex w-32 bg-white text-black border-[1px] border-black items-center justify-center gap-2 shadow-sm border p-3 rounded-lg' onclick = "handelBack()"
+    >
+      Back
+    </button>
+    <button
+    id="save"
+      class='flex w-32 bg-black text-white items-center justify-center gap-2 shadow-sm border p-3 rounded-lg' onclick="save()"
+    >
+      Save
+    </button>
+  </div>`;
 }

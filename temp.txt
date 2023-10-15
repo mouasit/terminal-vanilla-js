@@ -1,3 +1,10 @@
+{/* <span
+class='hidden flex items-center justify-center gap-4 rounded-md bg-green-50 p-3 font-medium text-green-700 ring-1 ring-inset ring-green-600/20 w-48'
+>
+Front <i class='bx bx-check-circle mt-[2px]'></i>
+</span> */}
+
+
 const modal = document.getElementById("modal");
 const dropdownCPU = document.getElementById("dropdownCPU");
 const dropdownList = document.getElementById("dropdownList");
