@@ -55,6 +55,32 @@ function closeDropdown(dropdownView, dropdownButton) {
   dropdownButton.querySelector("i").classList.toggle("bx-chevron-up");
 }
 
+function clickDropdownCpuButtonElement(element) {
+  const valueOfButtonDropdown = document
+    .getElementById("cpuContainer")
+    .querySelector("button")
+    .querySelector("span");
+  valueOfButtonDropdown.innerHTML = element.textContent;
+
+  closeDropdown(
+    document.getElementById("cpuView"),
+    document.getElementById("cpuContainer").querySelector("button")
+  );
+}
+
+function clickDropdownListButtonElement(element) {
+  const valueOfButtonDropdown = document
+    .getElementById("listContainer")
+    .querySelector("button")
+    .querySelector("span");
+  valueOfButtonDropdown.innerHTML = element.textContent;
+
+  closeDropdown(
+    document.getElementById("listView"),
+    document.getElementById("listContainer").querySelector("button")
+  );
+}
+
 function modalView() {
   return `<div id='modal' class='fixed left-0 top-0 flex justify-center bg-black/30 w-full h-full backdrop-blur-sm z-[999]'>
     <div
@@ -144,14 +170,14 @@ function dropdownCpuView() {
     id="cpuView"
       class='bg-white absolute w-full shadow-sm border rounded-lg gap-3 flex flex-col items-start py-3 top-14'
     >
-      <button class='hover:bg-gray-100 w-full text-left py-2 px-3'>
-        <span>CPU <span class='font-bold'>01</span></span>
+      <button class='hover:bg-gray-100 w-full text-left py-2 px-3' onclick='clickDropdownCpuButtonElement(this)'>
+        CPU <span class='font-bold'>01</span>
       </button>
-      <button class='hover:bg-gray-100 w-full text-left py-2 px-3'>
-        <span>CPU <span class='font-bold'>02</span></span>
+      <button class='hover:bg-gray-100 w-full text-left py-2 px-3' onclick='clickDropdownCpuButtonElement(this)'>
+        CPU <span class='font-bold'>02</span>
       </button>
-      <button class='hover:bg-gray-100 w-full text-left py-2 px-3'>
-        <span>CPU <span class='font-bold'>03</span></span>
+      <button class='hover:bg-gray-100 w-full text-left py-2 px-3' onclick='clickDropdownCpuButtonElement(this)'>
+        CPU <span class='font-bold'>03</span>
       </button>
     </div>`;
 }
@@ -162,14 +188,14 @@ function dropdownListView() {
     id="listView"
       class='bg-white absolute w-full shadow-sm border rounded-lg gap-3 flex flex-col items-start py-3 top-14'
     >
-      <button class='hover:bg-gray-100 w-full text-left py-2 px-3'>
-        <span>List <span class='font-bold'>01</span></span>
+      <button class='hover:bg-gray-100 w-full text-left py-2 px-3' onclick="clickDropdownListButtonElement(this)">
+        List <span class='font-bold'>01</span>
       </button>
-      <button class='hover:bg-gray-100 w-full text-left py-2 px-3'>
-        <span>List <span class='font-bold'>02</span></span>
+      <button class='hover:bg-gray-100 w-full text-left py-2 px-3' onclick="clickDropdownListButtonElement(this)">
+        List <span class='font-bold'>02</span>
       </button>
-      <button class='hover:bg-gray-100 w-full text-left py-2 px-3'>
-        <span>List <span class='font-bold'>03</span></span>
+      <button class='hover:bg-gray-100 w-full text-left py-2 px-3' onclick="clickDropdownListButtonElement(this)">
+        List <span class='font-bold'>03</span>
       </button>
     </div>`;
 }
