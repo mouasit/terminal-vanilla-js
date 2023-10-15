@@ -95,10 +95,19 @@ function displaySave() {
   if (!saveButton) modalBody.innerHTML += saveView();
 }
 
-function handelFrontButton() {
+function handelFrontButton(element) {
+  const parent = element.parentElement;
+  element.remove();
+  parent.innerHTML += successFrontButtonView();
   const selectContainer = document.getElementById("selectContainer");
   selectContainer?.remove();
   displaySave();
+}
+
+function handelBackButton() {
+  const modalBody = document.getElementById("modalBody");
+  modalBody.innerHTML = modalBodyView();
+  deleteUiFromModal();
 }
 
 function addUiToModal() {
@@ -109,6 +118,22 @@ function addUiToModal() {
     modal.classList.add("h-[18rem]");
     modalBody.classList.add("mt-[3rem]");
   }
+}
+
+function deleteUiFromModal() {
+  const modal = document.getElementById("modal").querySelector("div");
+  const modalBody = document.getElementById("modalBody");
+  modal.classList.remove("h-[18rem]");
+  modal.classList.add("h-[21.5rem]");
+  modalBody.classList.remove("mt-[3rem]");
+}
+
+function successFrontButtonView() {
+  return `<span
+    class='flex items-center justify-center gap-4 rounded-md bg-green-50 p-3 font-medium text-green-700 ring-1 ring-inset ring-green-600/20 w-48'
+    >
+    Front <i class='bx bx-check-circle mt-[2px]'></i>
+    </span>`;
 }
 
 function modalView() {
@@ -143,12 +168,14 @@ function modalView() {
     <!-- Modal body -->
     <div class='flex h-full justify-center items-center'>
       <div class='flex flex-col gap-4 items-center w-full' id="modalBody">
-          <button
-            id="frontButton"
-            class='flex w-48 bg-black text-white items-center justify-center items-center gap-2 shadow-sm border p-3 rounded-lg' onclick="handelFrontButton()"
-          >
-            Front
-          </button>
+      <div>      
+        <button
+          id="frontButton"
+          class='flex w-48 bg-black text-white items-center justify-center items-center gap-2 shadow-sm border p-3 rounded-lg' onclick="handelFrontButton(this)"
+        >
+          Front
+        </button>
+      </div>
         <span id="separator">- or -</span>
         <div class='flex items-center justify-around w-full' id="selectContainer">
           <div class='relative' id="cpuContainer">
@@ -171,6 +198,38 @@ function modalView() {
         </div>
       </div>
     </div>
+  </div>
+</div>`;
+}
+
+function modalBodyView() {
+  return `
+  <div>      
+  <button
+    id="frontButton"
+    class='flex w-48 bg-black text-white items-center justify-center items-center gap-2 shadow-sm border p-3 rounded-lg' onclick="handelFrontButton(this)"
+  >
+    Front
+  </button>
+</div>
+<span id="separator">- or -</span>
+<div class='flex items-center justify-around w-full' id="selectContainer">
+  <div class='relative' id="cpuContainer">
+    <button
+      class='item-dropdown-cpu shadow-sm border flex items-center justify-between font-medium w-48 p-3 rounded-lg' onclick="openDropdownCpu(this)"
+    >
+      <span class='item-dropdown-cpu'>Chose CPU</span>
+      <i class='bx bx-chevron-down item-dropdown-cpu'></i>
+    </button>
+  </div>
+
+  <div class='relative' id="listContainer">
+    <button
+      class='shadow-sm border flex items-center justify-between font-medium w-48 p-3 rounded-lg item-dropdown-list' onclick="openDropdownList(this)"
+    >
+      <span class='item-dropdown-list'>List</span>
+      <i class='bx bx-chevron-down item-dropdown-list'></i>
+    </button>
   </div>
 </div>`;
 }
@@ -214,7 +273,7 @@ function dropdownListView() {
 function saveView() {
   return `<div class='mt-[3rem] w-full flex justify-end gap-3'>
     <button
-      class='flex w-32 bg-white text-black border-[1px] border-black items-center justify-center gap-2 shadow-sm border p-3 rounded-lg' onclick = "handelBack()"
+      class='flex w-32 bg-white text-black border-[1px] border-black items-center justify-center gap-2 shadow-sm border p-3 rounded-lg' onclick = "handelBackButton()"
     >
       Back
     </button>
