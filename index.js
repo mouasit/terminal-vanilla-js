@@ -16,6 +16,29 @@ function openDropdownCpu(element) {
   else cpuContainer.innerHTML += dropdownCpuView();
 }
 
+document.addEventListener("click", (e) => {
+  const listContainer = document.getElementById("listContainer");
+  const listView = document.getElementById("listView");
+  const cpuContainer = document.getElementById("cpuContainer");
+  const cpuView = document.getElementById("cpuView");
+
+  if (
+    listView &&
+    !e.target.classList.contains("item-dropdown-list") &&
+    !listContainer?.contains(e.target)
+  ) {
+    closeDropdown(listView, listContainer.querySelector("button"));
+  }
+
+  if (
+    cpuView &&
+    !e.target.classList.contains("item-dropdown-cpu") &&
+    !cpuContainer?.contains(e.target)
+  ) {
+    closeDropdown(cpuView, cpuContainer.querySelector("button"));
+  }
+});
+
 function openDropdownList(element) {
   const listContainer = document.getElementById("listContainer");
   const listView = document.getElementById("listView");
@@ -33,9 +56,9 @@ function closeDropdown(dropdownView, dropdownButton) {
 }
 
 function modalView() {
-  return `<div id='modal' class='fixed left-0 top-0 flex justify-center items-center lg:items-start bg-black/30 w-full h-full backdrop-blur-sm z-[999]'>
+  return `<div id='modal' class='fixed left-0 top-0 flex justify-center bg-black/30 w-full h-full backdrop-blur-sm z-[999]'>
     <div
-      class='mt-0 lg:mt-8 rounded-lg flex flex-col p-4 bg-white w-[40rem] h-[21.5rem]'
+      class='mt-8 rounded-lg flex flex-col p-4 bg-white w-[40rem] h-[21.5rem]'
     >
       <!-- Modal header -->
       <div
@@ -80,19 +103,19 @@ function modalView() {
           <div class='flex items-center justify-around w-full'>
             <div class='relative' id="cpuContainer">
               <button
-                class='shadow-sm border flex items-center justify-between font-medium w-48 p-3 rounded-lg' onclick="openDropdownCpu(this)"
+                class='item-dropdown-cpu shadow-sm border flex items-center justify-between font-medium w-48 p-3 rounded-lg' onclick="openDropdownCpu(this)"
               >
-                <span>Chose CPU</span>
-                <i class='bx bx-chevron-down'></i>
+                <span class='item-dropdown-cpu'>Chose CPU</span>
+                <i class='bx bx-chevron-down item-dropdown-cpu'></i>
               </button>
             </div>
 
             <div class='relative' id="listContainer">
               <button
-                class='shadow-sm border flex items-center justify-between font-medium w-48 p-3 rounded-lg' onclick="openDropdownList(this)"
+                class='shadow-sm border flex items-center justify-between font-medium w-48 p-3 rounded-lg item-dropdown-list' onclick="openDropdownList(this)"
               >
-                <span>List</span>
-                <i class='bx bx-chevron-down'></i>
+                <span class='item-dropdown-list'>List</span>
+                <i class='bx bx-chevron-down item-dropdown-list'></i>
               </button>
             </div>
           </div>
